@@ -34,12 +34,19 @@ function googleWebhook(message, url) {
 }
 
 function sendMessage(triggerSheet, trigger, message, url) {
+  let messageSent = false
   if (sheet.getName() === triggerSheet && cell === trigger) {
     if (range.getValue() === true) {
       if (configSheet.getRange("B1").getValue() === "googlechat"){
-        googleWebhook(message, url)
+        if (!messageSent) {
+          googleWebhook(message, url)
+          messageSent = true
+        }
       } else if (configSheet.getRange("B1").getValue() === "slack") {
-        slackWebhook(message, url)
+        if (!messageSent) {
+          slackWebhook(message, url)
+          messageSent = true
+        }
       }
     }
   }
